@@ -1,0 +1,36 @@
+{
+    "name": "amsify42/php-domfinder",
+    "description": "PHP package for searching document object model efficiently and with more readable way.",
+    "keywords": ["php", "domdocument", "domfinder", "php-domfinder"],
+    "type": "library",
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit":  "^7.0",
+        "php": ">=7.0.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohd Samiullah",
+            "email": "amsify42@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "files": [],
+        "psr-4": {
+            "Amsify42\\DOMFinder\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "files": [
+            "tests/helpers.php"
+        ],
+        "psr-4": {
+            "Amsify42\\Tests\\": "tests/"
+        }
+    }
+}
