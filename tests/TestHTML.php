@@ -16,8 +16,6 @@ class TestHTML
 
 	public function process()
 	{
-		$metaTags 		= $this->domFinder->metaTags();
-		var_dump($metaTags->length);
 		$sectionItems 	= $this->domFinder->findByClass('section-item')->all();
 		if($sectionItems->length) {
 			foreach($sectionItems as $sik => $sectionItem) {

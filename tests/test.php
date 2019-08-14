@@ -6,3 +6,15 @@ libxml_use_internal_errors(true);
 
 $testHtml = new Amsify42\Tests\TestHTML();
 $testHtml->process();
+echo "\n\n";
+
+$testXml = new Amsify42\Tests\TestXML();
+$testXml->process();
+echo "\n\n";
+
+$testXmlUrl = new Amsify42\Tests\TestXMLURL();
+$testXmlUrl->process();
+echo "\n\n";
+
+$testUrl = new Amsify42\Tests\TestURL();
+$testUrl->process();

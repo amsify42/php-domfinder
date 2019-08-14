@@ -19,9 +19,9 @@ class DOMFinder
 	private $targetAttrVal 	= '';
 	private $subElements 	= '';
 
-	function __construct($source=NULL)
+	function __construct($source=NULL, $type='file', $loadContent=false)
 	{
-		if($source) $this->load($source);
+		if($source) $this->loadByType($source, $type, $loadContent);
 	}
 
 	public function setHeaders($headers = [])
@@ -31,15 +31,78 @@ class DOMFinder
 
 	public function load($source)
 	{
+		$this->loadByType($source);
+	}
+
+	public function loadHTML($html, $loadContent=false)
+	{
+		$this->loadByType($html, 'html', $loadContent);
+	}
+
+	public function loadXML($xml, $loadContent=false)
+	{
+		$this->loadByType($xml, 'xml', $loadContent);
+	}
+
+	private function loadByType($source, $type='file', $loadContent=false)
+	{
 		$this->metaTags = NULL;
 		$this->dom 		= new DOMDocument;
-		$this->dom->load($source);
+		if($type == 'html') {
+			$this->dom->loadHTML(($loadContent)? file_get_contents($source): $source);
+		} else if($type == 'xml') {
+			$this->dom->loadXML(($loadContent)? file_get_contents($source): $source);
+		} else {
+			if(filter_var($source, FILTER_VALIDATE_URL)) {
+				if($this->getURLType($source) == 'xml') {
+					$this->dom->loadXML(file_get_contents($source));	
+				} else {
+					$this->dom->loadHTML(file_get_contents($source));
+				}
+			} else {
+				$this->dom->load($source);	
+			}
+		}
 		$this->finder 	= new DomXPath($this->dom);
+	}
+
+	private function getURLType($url)
+	{
+		$info = pathinfo($url);
+		return isset($info['extension'])? trim($info['extension']): 'html';
+	}
+
+	public function dom()
+	{
+		return $this->dom;
 	}
 
 	public function finder()
 	{
-		$this->finder;
+		return $this->finder;
+	}
+
+	public function getElements($tag='*')
+	{
+		return $this->dom->getElementsByTagName($tag);
+	}
+
+	public function getFirstElement($tag='*')
+	{
+		$result = $this->dom->getElementsByTagName($tag);
+		if($result->length) {
+			return $result->item(0);
+		}
+		return NULL;
+	}
+
+	public function getElement($tag='*', $index=0)
+	{
+		$result = $this->dom->getElementsByTagName($tag);
+		if($result->length) {
+			return $result->item($index);
+		}
+		return NULL;
 	}
 
 	public function metaTags()
