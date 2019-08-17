@@ -2,7 +2,8 @@
 
 namespace Amsify42\DOMFinder;
 
-use DOMDocument;
+use Amsify42\DOMFinder\DOM\Document;
+use Amsify42\DOMFinder\Helper\Html;
 use DomXPath;
 
 
@@ -47,7 +48,8 @@ class DOMFinder
 	private function loadByType($source, $type='file', $loadContent=false)
 	{
 		$this->metaTags = NULL;
-		$this->dom 		= new DOMDocument;
+		$this->dom 		= new Document;
+		$this->dom->registerNodeClass('DOMElement', \Amsify42\DOMFinder\DOM\Element::class);
 		if($type == 'html') {
 			$this->dom->loadHTML(($loadContent)? file_get_contents($source): $source);
 		} else if($type == 'xml') {
@@ -243,32 +245,12 @@ class DOMFinder
 	public function extractFromElement($element, $patterns, $multi = false)
 	{
 		$html = $this->getHtml($element);
-		return $this->extractFromHtml($html, $patterns, $multi);
+		return Html::extractByRegex($html, $patterns, $multi);
 	}
 
 	public function extractFromHtml($html, $patterns, $multi = false)
 	{
-		$patterns 	= is_array($patterns)? $patterns: [$patterns];
-		$value 		= ($multi)? array(): '';
-		if($html && sizeof($patterns) > 0) {
-			foreach($patterns as $pkey => $pattern) {
-				if($pkey == 0) {
-					preg_match_all($pattern, $html, $matches);
-					$value = ($multi)? (isset($matches[0])? $matches[0]: ''): (isset($matches[1][0])? $matches[1][0]: '');
-				} else {
-					if($multi) {
-						foreach($value as $vkey => $val) {
-							preg_match_all($pattern, $val, $matches);
-							$value[$vkey] = (isset($matches[1][0]))? $matches[1][0]: '';
-						}
-					} else {
-						preg_match_all($pattern, $value, $matches);
-						$value = (isset($matches[1][0]))? $matches[1][0]: '';
-					}
-				}
-			}
-		}
-		return ($multi)? array_filter($value): trim($value);
+		return Html::extractByRegex($html, $patterns, $multi);
 	}
 
 	private function setMetaTags()

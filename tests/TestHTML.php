@@ -4,7 +4,6 @@ namespace Amsify42\Tests;
 
 use Amsify42\DOMFinder\DOMFinder;
 
-
 class TestHTML
 {
 	private $domFinder;
@@ -19,7 +18,7 @@ class TestHTML
 		$sectionItems 	= $this->domFinder->findByClass('section-item')->all();
 		if($sectionItems->length) {
 			foreach($sectionItems as $sik => $sectionItem) {
-				echo $sectionItem->textContent."\n";
+				echo $sectionItem->outerHTML()."\n";
 			}
 		}
 	}
