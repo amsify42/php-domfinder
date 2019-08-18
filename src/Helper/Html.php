@@ -12,7 +12,7 @@ class Html
 			foreach($patterns as $pkey => $pattern) {
 				if($pkey == 0) {
 					preg_match_all($pattern, $html, $matches);
-					$value = ($multi)? (isset($matches[0])? $matches[0]: ''): (isset($matches[1][0])? $matches[1][0]: '');
+					$value = ($multi)? (isset($matches[1])? $matches[1]: ''): (isset($matches[1][0])? $matches[1][0]: '');
 				} else {
 					if($multi) {
 						foreach($value as $vkey => $val) {

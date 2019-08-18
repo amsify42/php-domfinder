@@ -65,7 +65,7 @@ class DOMFinder
 				$this->dom->load($source);	
 			}
 		}
-		$this->finder 	= new DomXPath($this->dom);
+		$this->finder = new DomXPath($this->dom);
 	}
 
 	private function getURLType($url)
@@ -154,6 +154,26 @@ class DOMFinder
 	public function findByAttr($type, $value)
 	{
 		return $this->find()->byAttr($type, $value);
+	}
+
+	public function findFirstByClass($class)
+	{
+		return $this->findByClass($class)->first();
+	}
+
+	public function findFirstClassLike($class)
+	{
+		return $this->findClassLike($class)->first();
+	}
+
+	public function findFirstById($id)
+	{
+		return $this->findById($id)->first();
+	}
+
+	public function findFirstByAttr($type, $value)
+	{
+		return $this->findByAttr($type, $value)->first();
 	}
 
 	public function find($element = '*')

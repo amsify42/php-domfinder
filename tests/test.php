@@ -18,3 +18,7 @@ echo "\n\n";
 
 $testUrl = new Amsify42\Tests\TestURL();
 $testUrl->process();
+
+$testRegex = new Amsify42\Tests\TestRegex();
+$testRegex->process();
+echo "\n\n";
