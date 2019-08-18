@@ -189,7 +189,8 @@ $domFinder = new Amsify42\DOMFinder\DOMFinder();
 $domFinder->loadHTML($html);
 
 $section = $domFinder->findFirstByClass('section');
-if($section) {
+if($section)
+{
 	// Here you will get js dictionary data
 	$data = $section->extractByRegex("/data\=(.*?)\;</");
 }
@@ -205,18 +206,15 @@ $domFinder = new Amsify42\DOMFinder\DOMFinder();
 $domFinder->loadHTML($html);
 
 $section = $domFinder->findFirstByClass('section');
-if($section) {
-	// Here you will multiple js dictionary data as array
+if($section)
+{
+	// Here you will get multiple js dictionary data as array
 	$data = $section->extractByRegex("/class=\"some-class\">(.*?)\<\//", true);
-	var_dump($data);
 }
 ```
 You can also pass multiple regex as array for multi level check
 ```php
-$data = $section->extractByRegex([
-								"/<some-element(.*?)some-element>/",
-								"/class=\"some-class\">(.*?)\<\//"
-							], true);	
+$data = $section->extractByRegex(["/<some-element(.*?)some-element>/", "/class=\"some-class\">(.*?)\<\//"], true);
 ```
 
 ### 8. Element Helpers
@@ -281,9 +279,11 @@ This section is to demonstrate how the dom finder works at multi level.
 
 ```php
 $div = $domFinder->find('div')->byClass('parent-class')->first();
-if($div) {
+if($div)
+{
 	$divs = $div->find('div')->byClass('child-class')->all();
-	if($divs->length) {
+	if($divs->length)
+	{
 		echo $divs->length;
 	}
 }
