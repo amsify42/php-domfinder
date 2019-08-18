@@ -66,17 +66,17 @@ $domFinder->loadXML('http://www.site.com/file.xml', true);
 
 ### 2. Meta Tags
 ---
-After source has been loaded you use these meta tags related methods.
+After source has been loaded, you can use these meta tags related methods.
 ```php
 $metaTags = $domFinder->metaTags();
 ```
 To get specific meta tag value
 ```php
-$image = $domFinder->getMetaValue('name', 'title');
+$title = $domFinder->getMetaValue('name', 'title');
 ```
 By default it takes **content** attribute value from meta, to get value from other attribute, pass 3rd parameter
 ```php
-$image = $domFinder->getMetaValue('name', 'title', 'content');
+$title = $domFinder->getMetaValue('name', 'title', 'content');
 ```
 
 ### 3. Elements
@@ -87,11 +87,11 @@ $paras = $domFinder->getElements('p');
 ```
 To get first element
 ```php
-$paras = $domFinder->getFirstElement('p');
+$para = $domFinder->getFirstElement('p');
 ```
 To get the element by index position
 ```php
-$paras = $domFinder->getElement('p', 1);
+$para = $domFinder->getElement('p', 1);
 ```
 
 ### 4. Element Class
