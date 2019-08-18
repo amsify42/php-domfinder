@@ -16,7 +16,7 @@ composer require amsify42/php-domfinder
 3. [Elements](#3-elements)
 4. [Element Class](#4-element-class)
 5. [Element Id](#5-element-id)
-6. [Element Attribute](#6-element-id)
+6. [Element Attribute](#6-element-attribute)
 7. [Regex Extraction](#7-regex-extraction)
 8. [Element Helpers](#8-element-helpers)
 9. [Multi Level Finder](#9-multi-level-finder)
@@ -219,7 +219,7 @@ $data = $section->extractByRegex([
 							], true);	
 ```
 
-### 8. Regex Extraction
+### 8. Element Helpers
 ---
 These are the helper methods you can use at element level
 ```html
