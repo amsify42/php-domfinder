@@ -220,6 +220,7 @@ $data = $section->extractByRegex([
 ```
 
 ### 8. Regex Extraction
+---
 These are the helper methods you can use at element level
 ```html
 <ul class="list-items">
@@ -256,6 +257,7 @@ Inner html will print
 ```
 
 ### 9. Multi Level Finder
+---
 This section is to demonstrate how the dom finder works at multi level.
 
 ```html
