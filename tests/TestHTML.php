@@ -12,6 +12,7 @@ class TestHTML
 		$this->sampleOne();
 		$this->sampleTwo();
 		$this->sampleThree();
+		$this->sampleFour();
 	}
 
 	private function sampleOne()
@@ -36,13 +37,22 @@ class TestHTML
 
 	private function sampleThree()
 	{
-		$domFinder 	= new DOMFinder(getSample('sample-three.html'));
+		$domFinder 	= get_dom_finder(getSample('sample-three.html'));
 		$div 		= $domFinder->find('div')->byClass('parent-class')->first();
 		if($div) {
 			$divs = $div->find('div')->byClass('child-class')->all();
 			if($divs->length) {
-				echo $divs->length;
+				echo $divs->length."\n";
 			}
+		}
+	}
+
+	private function sampleFour()
+	{
+		$domFinder 	= get_dom_finder(getSample('sample-three.html'));
+		$divs 		= $domFinder->finder()->query("/div[@class='parent-class']/div");
+		if($divs->length) {
+			echo $divs->length."\n";
 		}
 	}
 }

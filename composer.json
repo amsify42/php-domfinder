@@ -20,7 +20,9 @@
     ],
     "minimum-stability": "dev",
     "autoload": {
-        "files": [],
+        "files": [
+            "src/Helper/global.php"
+        ],
         "psr-4": {
             "Amsify42\\DOMFinder\\": "src/"
         }

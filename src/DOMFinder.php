@@ -12,6 +12,7 @@ class DOMFinder
 	private $dom, $finder;
 
 	private $headers 		= [];
+	private $loaded 		= false;
 
 	private $metaTags 		= NULL;
 	private $targetElement 	= '';
@@ -32,17 +33,17 @@ class DOMFinder
 
 	public function load($source)
 	{
-		$this->loadByType($source);
+		return $this->loadByType($source);
 	}
 
 	public function loadHTML($html, $loadContent=false)
 	{
-		$this->loadByType($html, 'html', $loadContent);
+		return $this->loadByType($html, 'html', $loadContent);
 	}
 
 	public function loadXML($xml, $loadContent=false)
 	{
-		$this->loadByType($xml, 'xml', $loadContent);
+		return $this->loadByType($xml, 'xml', $loadContent);
 	}
 
 	private function loadByType($source, $type='file', $loadContent=false)
@@ -50,22 +51,108 @@ class DOMFinder
 		$this->metaTags = NULL;
 		$this->dom 		= new Document;
 		$this->dom->registerNodeClass('DOMElement', \Amsify42\DOMFinder\DOM\Element::class);
-		if($type == 'html') {
-			$this->dom->loadHTML(($loadContent)? file_get_contents($source): $source);
-		} else if($type == 'xml') {
-			$this->dom->loadXML(($loadContent)? file_get_contents($source): $source);
-		} else {
-			if(filter_var($source, FILTER_VALIDATE_URL)) {
-				if($this->getURLType($source) == 'xml') {
-					$this->dom->loadXML(file_get_contents($source));	
-				} else {
-					$this->dom->loadHTML(file_get_contents($source));
+		if($type == 'html')
+		{
+			if($loadContent)
+			{
+				$content = $this->getURLContents($source);
+				if($content)
+				{
+					$this->loaded = true;
+					$this->dom->loadHTML($content);
 				}
-			} else {
-				$this->dom->load($source);	
+			}
+			else
+			{
+				$this->loaded = true;
+				$this->dom->loadHTML($source);	
+			}
+		}
+		else if($type == 'xml')
+		{
+			if($loadContent)
+			{
+				$content = $this->getURLContents($source);
+				if($content)
+				{
+					$this->loaded = true;
+					$this->dom->loadXML($content);
+				}
+			}
+			else
+			{
+				$this->loaded = true;
+				$this->dom->loadXML($source);	
+			}
+		}
+		else
+		{
+			if(filter_var($source, FILTER_VALIDATE_URL))
+			{
+				if($this->getURLType($source) == 'xml')
+				{
+					$content = $this->getURLContents($source);
+					if($content)
+					{
+						$this->loaded = true;
+						$this->dom->loadXML($content);
+					}
+				}
+				else
+				{
+					$content = $this->getURLContents($source);
+					if($content)
+					{
+						$this->loaded = true;
+						$this->dom->loadHTML($content);
+					}
+				}
+			}
+			else
+			{
+				if(is_file($source))
+				{
+					$this->loaded = true;
+					$this->dom->load($source);
+				}
 			}
 		}
 		$this->finder = new DomXPath($this->dom);
+		return $this->loaded;
+	}
+
+	public function isLoaded()
+	{
+		return $loaded;
+	}
+
+	private function getURLContents($url)
+	{
+		$headers = $this->createHeaders();
+		if($headers)
+		{
+			$options = [
+				'http' => [
+					'method' => 'GET',
+					'header' => $headers
+				]
+			];
+			$context = stream_context_create($options);
+			return file_get_contents($url, false, $context);
+		}
+		else
+		{
+			return file_get_contents($url);	
+		}
+	}
+
+	private function createHeaders()
+	{
+		if(sizeof($this->headers)> 0)
+		{
+			return implode('\r\n', $this->headers);
+		}
+		return NULL;
 	}
 
 	private function getURLType($url)
@@ -92,7 +179,8 @@ class DOMFinder
 	public function getFirstElement($tag='*')
 	{
 		$result = $this->dom->getElementsByTagName($tag);
-		if($result->length) {
+		if($result->length)
+		{
 			return $result->item(0);
 		}
 		return NULL;
@@ -101,7 +189,8 @@ class DOMFinder
 	public function getElement($tag='*', $index=0)
 	{
 		$result = $this->dom->getElementsByTagName($tag);
-		if($result->length) {
+		if($result->length)
+		{
 			return $result->item($index);
 		}
 		return NULL;
@@ -116,9 +205,12 @@ class DOMFinder
 	public function getMetaValue($attr, $key, $value='content')
 	{
 		$this->setMetaTags();
-		if($this->metaTags && $this->metaTags->length) {
-			foreach($this->metaTags as $metaTag) {
-				if($metaTag->getAttribute($attr) == $key) {
+		if($this->metaTags && $this->metaTags->length)
+		{
+			foreach($this->metaTags as $metaTag)
+			{
+				if($metaTag->getAttribute($attr) == $key)
+				{
 					return $metaTag->getAttribute($value);
 				}
 			}
@@ -178,9 +270,12 @@ class DOMFinder
 
 	public function find($element = '*')
 	{
-		if($this->targetElement) {
+		if($this->targetElement)
+		{
 			$this->subElements .= '/'.$element;
-		} else {
+		}
+		else
+		{
 			$this->targetElement = $element;
 		}
 		return $this;
@@ -237,7 +332,8 @@ class DOMFinder
 	public function first()
 	{
 		$result = $this->result();
-		if($result->length) {
+		if($result->length)
+		{
 			return $result->item(0);
 		}
 		return NULL;
@@ -246,7 +342,8 @@ class DOMFinder
 	public function get($index=0)
 	{
 		$result = $this->result();
-		if($result->length) {
+		if($result->length)
+		{
 			return $result->item($index);
 		}
 		return NULL;
@@ -275,7 +372,8 @@ class DOMFinder
 
 	private function setMetaTags()
 	{
-		if(!$this->metaTags) {
+		if(!$this->metaTags)
+		{
 			$this->metaTags = $this->findAll('html/head/meta');
 		}
 	}
@@ -283,17 +381,23 @@ class DOMFinder
 	private function result()
 	{
 		$query = "//";
-		if($this->targetElement) {
+		if($this->targetElement)
+		{
 			$query .= $this->targetElement;
 		}
-		if($this->compareType) {
-			if($this->compareType == 'contains') {
+		if($this->compareType)
+		{
+			if($this->compareType == 'contains')
+			{
 				$query .= "[contains(@".$this->targetAttr.", '".$this->targetAttrVal."')]";
-			} else if($this->compareType == 'equal') {
+			}
+			else if($this->compareType == 'equal')
+			{
 				$query .= "[@".$this->targetAttr."='".$this->targetAttrVal."']";
 			}	
 		}
-		if($this->subElements) {
+		if($this->subElements)
+		{
 			$query .= $this->subElements;
 		}
 		$this->reset();
