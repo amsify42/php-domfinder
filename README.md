@@ -353,7 +353,7 @@ $uls = $domFinder->find('div')->byClass('child-class')->find('ul')->all();
 // or
 $uls = $domFinder->find('div')->byClass('child-class')->findAll('ul');
 ```
-The above query is same as DomXPath
+The above query is same as `DomXPath`
 ```php
 $uls = $domFinder->finder()->query("/div[@class='child-class']/ul");
 ```
