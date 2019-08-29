@@ -65,11 +65,11 @@ $domFinder->loadXML('http://www.site.com/file.xml', true);
 $domFinder = get_dom_finder('http://www.site.com/file.html', 'html', true);
 ```
 
-**Note:** Make sure you pass *true* as 3rd parameter to constructor/helper method or 2nd parameter to load method for loading content from URL.
+**Note:** Make sure you pass `true` as 3rd parameter to constructor/helper method or 2nd parameter to load method for loading content from URL.
 
 ### Important Notes
 #### 1. DOMDocument
-*Amsify42\DOMFinder\DOMFinder* class uses *Amsify42\DOMFinder\DOM\Document* which extends PHP pre defined class *DOMDocument*. You can use all the methods of *DOMDocument* using this instance
+`Amsify42\DOMFinder\DOMFinder` class uses `Amsify42\DOMFinder\DOM\Document` which extends PHP pre defined class `DOMDocument`. You can use all the methods of `DOMDocument` using this instance
 ```php
 $domFinder->dom();	
 ```
@@ -78,7 +78,7 @@ Example:
 $domFinder->dom()->getElementsByTagName('p');	
 ```
 #### 2. DomXPath
-*Amsify42\DOMFinder\DOMFinder* class uses PHP pre defined class *DomXPath* for querying document. If you want to use all the methods of *DomXPath*, you can use this instance
+`Amsify42\DOMFinder\DOMFinder` class uses PHP pre defined class `DomXPath` for querying document. If you want to use all the methods of `DomXPath`, you can use this instance
 ```php
 $domFinder->finder();
 ```
@@ -87,7 +87,7 @@ Example:
 $domFinder->finder()->query("/div[@class='body-entry']");	
 ```
 #### 3. DOMElement
-All the element results you get after querying document will be of type *Amsify42\DOMFinder\DOM\Element* which extends PHP pre defined class *DOMElement*.
+All the element results you get after querying document will be of type `Amsify42\DOMFinder\DOM\Element` which extends PHP pre defined class `DOMElement`.
 ```php
 $anchors = $domFinder->find('a')->byClass('action-link')->all();
 if($anchors->length)
@@ -98,7 +98,7 @@ if($anchors->length)
 	}
 }
 ```
-You can use all the methods of *DOMElement* from all the element items.
+You can use all the methods of `DOMElement` from all the element items.
 Example:
 ```php
 foreach($anchors as $anchor)
@@ -106,7 +106,7 @@ foreach($anchors as $anchor)
 	$anchor->getAttribute('href');
 }
 ```
-Most importantly, whenever you try to get the first or particular key element by index, it will either return *NULL* or element of type *Amsify42\DOMFinder\DOM\Element*.
+Most importantly, whenever you try to get the first or particular key element by index, it will either return `NULL` or element of type `Amsify42\DOMFinder\DOM\Element`.
 Examples:
 ```php
 $para = $domFinder->getFirstElement('p');
@@ -357,7 +357,7 @@ The above query is same as DomXPath
 ```php
 $uls = $domFinder->finder()->query("/div[@class='child-class']/ul");
 ```
-You will get all the *ul* elements
+You will get all the **ul** elements
 ```php
 if($uls->length)
 {
@@ -369,7 +369,7 @@ if($uls->length)
 ```
 
 #### Element Level
-This approach actually creates *DOMFinder* instance at each element level when you try to do query.
+This approach actually creates `DOMFinder` instance at each element level when you try to do query.
 ```php
 $div = $domFinder->find('div')->byClass('parent-class')->first();
 if($div)
