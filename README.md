@@ -128,14 +128,14 @@ $metaTags = $domFinder->metaTags();
 ```
 To get specific meta tag value
 ```html
-<meta name="title" "content"="Amsify42">
+<meta name="title" content="Amsify42">
 ```
 ```php
 $title = $domFinder->getMetaValue('name', 'title');
 ```
 By default it takes **content** attribute value from meta element, to get value from other attribute, pass 3rd parameter
 ```html
-<meta name="title" "myattr"="Amsify42">
+<meta name="title" myattr="Amsify42">
 ```
 ```php
 $title = $domFinder->getMetaValue('name', 'title', 'myattr');
