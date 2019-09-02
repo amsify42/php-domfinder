@@ -1,22 +1,21 @@
 ## PHP DOM Finder
-PHP package for searching document object model efficiently and with more readable way.
+> PHP package for searching document object model efficiently and with more readable way.
 
 ### Installation
-
-```txt
-composer require amsify42/php-domfinder
 ```
-
+$ composer require amsify42/php-domfinder
+```
 ## Table of Contents
 1. [Loading Source](#1-loading-source)
-2. [Meta Tags](#2-meta-tags)
-3. [Elements](#3-elements)
-4. [Element Class](#4-element-class)
-5. [Element Id](#5-element-id)
-6. [Element Attribute](#6-element-attribute)
-7. [Regex Extraction](#7-regex-extraction)
-8. [Element Methods](#8-element-methods)
-9. [Multi Level Finder](#9-multi-level-finder)
+2. [Important Notes](#2-important-notes)
+3. [Meta Tags](#3-meta-tags)
+4. [Elements](#4-elements)
+5. [Element Class](#5-element-class)
+6. [Element Id](#6-element-id)
+7. [Element Attribute](#7-element-attribute)
+8. [Regex Extraction](#8-regex-extraction)
+9. [Element Methods](#9-element-methods)
+10. [Multi Level Finder](#10-multi-level-finder)
 
 ### 1. Loading Source
 ---
@@ -67,9 +66,10 @@ $domFinder = get_dom_finder('http://www.site.com/file.html', 'html', true);
 
 **Note:** Make sure you pass `true` as 3rd parameter to constructor/helper method or 2nd parameter to load method for loading content from URL.
 
-### Important Notes
-#### 1. DOMDocument
-`Amsify42\DOMFinder\DOMFinder` class uses `Amsify42\DOMFinder\DOM\Document` which extends PHP pre defined class `DOMDocument`. You can use all the methods of `DOMDocument` using this instance
+### 2. Important Notes
+---
+#### 1. [DOMDocument](https://www.php.net/manual/en/class.domdocument.php)
+`Amsify42\DOMFinder\DOMFinder` class uses `Amsify42\DOMFinder\DOM\Document` which extends PHP pre defined class [DOMDocument](https://www.php.net/manual/en/class.domdocument.php). You can use all the methods of `DOMDocument` using this instance
 ```php
 $domFinder->dom();	
 ```
@@ -77,8 +77,8 @@ Example:
 ```php
 $domFinder->dom()->getElementsByTagName('p');	
 ```
-#### 2. DomXPath
-`Amsify42\DOMFinder\DOMFinder` class uses PHP pre defined class `DomXPath` for querying document. If you want to use all the methods of `DomXPath`, you can use this instance
+#### 2. [DomXPath](https://www.php.net/manual/en/class.domxpath.php)
+`Amsify42\DOMFinder\DOMFinder` class uses PHP pre defined class `DomXPath` for querying document. If you want to use all the methods of [DomXPath](https://www.php.net/manual/en/class.domxpath.php), you can use this instance
 ```php
 $domFinder->finder();
 ```
@@ -86,8 +86,8 @@ Example:
 ```php
 $domFinder->finder()->query("/div[@class='body-entry']");	
 ```
-#### 3. DOMElement
-All the element results you get after querying document will be of type `Amsify42\DOMFinder\DOM\Element` which extends PHP pre defined class `DOMElement`.
+#### 3. [DOMElement](https://www.php.net/manual/en/class.domelement.php)
+All the element results you get after querying document will be of type `Amsify42\DOMFinder\DOM\Element` which extends PHP pre defined class [DOMElement](https://www.php.net/manual/en/class.domelement.php).
 ```php
 $anchors = $domFinder->find('a')->byClass('action-link')->all();
 if($anchors->length)
@@ -120,7 +120,7 @@ $para = $domFinder->find('p')->first();
 $para = $domFinder->find('p')->get(1);
 ```
 
-### 2. Meta Tags
+### 3. Meta Tags
 ---
 After source has been loaded, you can use these meta tags related methods.
 ```php
@@ -141,7 +141,7 @@ By default it takes **content** attribute value from meta element, to get value 
 $title = $domFinder->getMetaValue('name', 'title', 'myattr');
 ```
 
-### 3. Elements
+### 4. Elements
 ---
 To get specific elements from DOM
 ```php
@@ -156,7 +156,7 @@ To get the element by index position
 $para = $domFinder->getElement('p', 1);
 ```
 
-### 4. Element Class
+### 5. Element Class
 ---
 #### Equals
 Find all elements by class name
@@ -206,7 +206,7 @@ For getting element by its key position
 $div = $domFinder->find('div')->classLike('section-items')->get(1); // This will return 2nd element
 ```
 
-### 5. Element Id
+### 6. Element Id
 ---
 Find all elements by id
 ```php
@@ -227,7 +227,7 @@ Find first div tag element by id
 $div = $domFinder->find('div')->byId('body-entry')->first();
 ```
 
-### 6. Element Attribute
+### 7. Element Attribute
 ---
 Find all elements by attribute
 ```php
@@ -252,7 +252,7 @@ For getting element by its key position
 $div = $domFinder->find('div')->byAttr('data-section', 'paragraph')->get(1); // This will return 2nd element
 ```
 
-### 7. Regex Extraction
+### 8. Regex Extraction
 ---
 To extract particular item from html, consider this sample html
 ```php
@@ -289,7 +289,7 @@ You can also pass multiple regex as array for multi level check and extraction
 $data = $section->extractByRegex(["/<some-element(.*?)some-element>/", "/class=\"some-class\">(.*?)\<\//"], true);
 ```
 
-### 8. Element methods
+### 9. Element methods
 ---
 These are the methods you can use at element level
 ```html
@@ -326,7 +326,7 @@ Inner html will print
 <li>Item three</li>
 ```
 
-### 9. Multi Level Finder
+### 10. Multi Level Finder
 ---
 This section is to demonstrate how the dom finder works at multi level.
 ```html
