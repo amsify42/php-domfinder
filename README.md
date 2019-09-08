@@ -207,6 +207,7 @@ $div = $domFinder->find('div')->classLike('section-items')->get(1); // This will
 ```
 
 ### 6. Element Id
+#### Equals
 ---
 Find all elements by id
 ```php
@@ -226,8 +227,32 @@ Find first div tag element by id
 ```php
 $div = $domFinder->find('div')->byId('body-entry')->first();
 ```
+#### Like
+Find all elements contains id
+```php
+$elements = $domFinder->findIdLike('section-')->all();
+```
+Find first element contains id
+```php
+$element = $domFinder->findIdLike('section-')->first();
+// or
+$element = $domFinder->findFirstIdLike('section-items');
+```
+Find all div tag element contains id
+```php
+$divs = $domFinder->find('div')->idLike('section-')->all();
+```
+Find first div tag element contains id
+```php
+$div = $domFinder->find('div')->idLike('section-')->first();
+```
+For getting element by its key position
+```php
+$div = $domFinder->find('div')->idLike('section-')->get(1); // This will return 2nd element
+```
 
 ### 7. Element Attribute
+#### Equals
 ---
 Find all elements by attribute
 ```php
@@ -250,6 +275,29 @@ $div = $domFinder->find('div')->byAttr('data-section', 'paragraph')->first();
 For getting element by its key position
 ```php
 $div = $domFinder->find('div')->byAttr('data-section', 'paragraph')->get(1); // This will return 2nd element
+```
+#### Like
+Find all elements contains attribute
+```php
+$elements = $domFinder->findAttrLike('my-att', 'some-')->all();
+```
+Find first element contains attribute
+```php
+$element = $domFinder->findAttrLike('my-att', 'some-')->first();
+// or
+$element = $domFinder->findFirstAttrLike('my-att', 'some-');
+```
+Find all div tag element contains attribute
+```php
+$divs = $domFinder->find('div')->attrLike('my-att', 'some-')->all();
+```
+Find first div tag element contains attribute
+```php
+$div = $domFinder->find('div')->attrLike'my-att', 'some-')->first();
+```
+For getting element by its key position
+```php
+$div = $domFinder->find('div')->attrLike('my-att', 'some-')->get(1); // This will return 2nd element
 ```
 
 ### 8. Regex Extraction

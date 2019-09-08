@@ -22,3 +22,7 @@ $testUrl->process();
 $testRegex = new Amsify42\Tests\TestRegex();
 $testRegex->process();
 echo "\n\n";
+
+$testLike = new Amsify42\Tests\TestLike();
+$testLike->process();
+echo "\n\n";
