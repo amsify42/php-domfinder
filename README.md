@@ -207,8 +207,8 @@ $div = $domFinder->find('div')->classLike('section-items')->get(1); // This will
 ```
 
 ### 6. Element Id
-#### Equals
 ---
+#### Equals
 Find all elements by id
 ```php
 $elements = $domFinder->findById('body-entry')->all();
@@ -236,7 +236,7 @@ Find first element contains id
 ```php
 $element = $domFinder->findIdLike('section-')->first();
 // or
-$element = $domFinder->findFirstIdLike('section-items');
+$element = $domFinder->findFirstIdLike('section-');
 ```
 Find all div tag element contains id
 ```php
@@ -252,8 +252,8 @@ $div = $domFinder->find('div')->idLike('section-')->get(1); // This will return 
 ```
 
 ### 7. Element Attribute
-#### Equals
 ---
+#### Equals
 Find all elements by attribute
 ```php
 $elements = $domFinder->findByAttr('data-section', 'paragraph')->all();
