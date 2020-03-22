@@ -135,31 +135,14 @@ class DOMFinder
 
 	private function getURLContents($url)
 	{
-		$headers = $this->createHeaders();
-		if($headers)
-		{
-			$options = [
-				'http' => [
-					'method' => 'GET',
-					'header' => $headers
-				]
-			];
-			$context = stream_context_create($options);
-			return file_get_contents($url, false, $context);
-		}
-		else
-		{
-			return file_get_contents($url);	
-		}
-	}
-
-	private function createHeaders()
-	{
+		$curlRequest = NULL;
 		if(sizeof($this->headers)> 0)
 		{
-			return implode('\r\n', $this->headers);
+			$curlRequest = new \Amsify42\CurlHttp\CurlRequest();
+			$curlRequest->setHeaders($this->headers);
 		}
-		return NULL;
+		$response = get_curl_http($url, $curlRequest);
+		return $response->execute()->getBodyData();
 	}
 
 	private function getURLType($url)

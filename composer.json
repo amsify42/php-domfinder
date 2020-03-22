@@ -4,11 +4,13 @@
     "keywords": ["php", "domdocument", "domfinder", "php-domfinder"],
     "type": "library",
     "require": {
-        "php": ">=7.0.0"
+        "php": ">=7.0.0",
+        "amsify42/php-curl-http": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit":  "^7.0",
-        "php": ">=7.0.0"
+        "php": ">=7.0.0",
+        "amsify42/php-curl-http": "dev-master"
     },
     "license": "MIT",
     "authors": [
